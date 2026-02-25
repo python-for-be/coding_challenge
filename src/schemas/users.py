@@ -2,6 +2,40 @@ from pydantic import BaseModel, ConfigDict
 from datetime import date
 
 
+class AddressCreateSchema(BaseModel):
+    """Schema for creating a new address.
+
+    Attributes:
+        city (str): The city name.
+        country (str): The country name.
+        number (str): The house or building number.
+        postcode (str): The postal code.
+        street_name (str): The name of the street.
+    """
+
+    city: str
+    country: str
+    number: str
+    postcode: str
+    street_name: str
+
+
+class UserCreateSchema(BaseModel):
+    """Schema for creating a new user.
+
+    Attributes:
+        firstname (str): The first name of the user.
+        lastname (str): The last name of the user.
+        date_of_birth (date): The user's date of birth.
+        address (AddressCreateSchema): The user's address information.
+    """
+
+    firstname: str
+    lastname: str
+    date_of_birth: date
+    address: AddressCreateSchema
+
+
 class Address(BaseModel):
     """Schema for the address of a user.
 
