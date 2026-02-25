@@ -5,6 +5,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from src.core.exceptions import UserNotFoundError
 from src.models.address import Address
 from src.models.user import User
 
@@ -37,10 +38,10 @@ class UserRepository:
         return user
 
     async def delete_user(self, user_id: int) -> None:
-        """Delete a user by ID.
-
-        Args:
-            user_id (int): Unique identifier of the user to delete.
-        """
+        """Delete a user record by ID."""
         stmt = delete(User).where(User.id == user_id).returning(User.id)
-        await self.session.execute(stmt)
+        result = await self.session.execute(stmt)
+
+        deleted_id = result.scalar_one_or_none()
+        if deleted_id is None:
+            raise UserNotFoundError("User not found.")
