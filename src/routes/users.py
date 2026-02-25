@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.core.db import get_async_session
 from src.repositories.users import UserRepository
-from src.schemas.users import UsersResponse, UserCreateSchema
+from src.schemas.users import UsersResponse, UserCreateSchema, UserUpdateSchema
 from src.services.users import UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -40,3 +40,11 @@ async def delete_user(user_id: int, service: UserService = Depends(get_user_serv
         dict[str, str]: Success message.
     """
     return await service.delete_user(user_id)
+
+
+@router.put("/{user_id}", response_model=UsersResponse)
+async def update_user(
+    user_id: int, user_in: UserUpdateSchema, service: UserService = Depends(get_user_service)
+) -> dict[str, Any]:
+    """Update a user."""
+    return await service.update_user(user_id, user_in)
