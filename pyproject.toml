@@ -99,3 +99,7 @@ omit-covered-files = false
 
 [tool.mypy]
 strict = true
+
+
+[tool.poetry]
+package-mode = false
