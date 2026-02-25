@@ -10,3 +10,9 @@ class DateFormatError(DomainException):
     """Raised when the date format is invalid."""
 
     pass
+
+
+class MinimumAgeError(DomainException):
+    """Raised when the date format is invalid."""
+
+    pass

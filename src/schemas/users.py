@@ -1,7 +1,8 @@
 from datetime import date, datetime
 from pydantic import BaseModel, ConfigDict, field_validator
 
-from src.core.exceptions import DateFormatError
+from src.core.exceptions import DateFormatError, MinimumAgeError
+from src.core.utils import calculate_age
 
 
 class AddressCreateSchema(BaseModel):
@@ -44,6 +45,11 @@ class UserCreateSchema(BaseModel):
             datetime.strptime(value, "%Y-%m-%d")
         except ValueError:
             raise DateFormatError("Invalid date format, expected YYYY-MM-DD")
+
+        user_age = calculate_age(date_of_birth=value)
+
+        if user_age < 16:
+            raise MinimumAgeError("User age must be at least 16 years old.")
         return value
 
 
