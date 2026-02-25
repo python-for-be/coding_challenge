@@ -27,3 +27,16 @@ async def list_users(service: UserService = Depends(get_user_service)) -> List[d
 async def create_user(user_in: UserCreateSchema, service: UserService = Depends(get_user_service)) -> dict[str, Any]:
     """Create a new user."""
     return await service.create_user(user_in)
+
+
+@router.delete("/{user_id}", status_code=204)
+async def delete_user(user_id: int, service: UserService = Depends(get_user_service)) -> None:
+    """Delete a user record.
+
+    Args:
+        user_id (int): ID of the user to delete.
+
+    Returns:
+        dict[str, str]: Success message.
+    """
+    return await service.delete_user(user_id)
