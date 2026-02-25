@@ -34,14 +34,3 @@ def setup_logging(log_level: str = "INFO", log_file: str | None = None) -> None:
         force=True,
         style="{",
     )
-
-
-logger = logging.getLogger(__name__)
-
-setup_logging(log_level="DEBUG", log_file=None)
-
-logger.debug("This is a debug message")
-logger.info("This is an info message")
-logger.warning("This is a warning message")
-logger.error("This is an error message")
-logger.critical("This is a critical message")
