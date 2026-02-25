@@ -16,3 +16,9 @@ class MinimumAgeError(DomainException):
     """Raised when the date format is invalid."""
 
     pass
+
+
+class UserNotFoundError(DomainException):
+    """Raised when a user record is not found in the database."""
+
+    pass
