@@ -95,3 +95,7 @@ quiet = false
 whitelist-regex = []
 color = true
 omit-covered-files = false
+
+
+[tool.mypy]
+strict = true
