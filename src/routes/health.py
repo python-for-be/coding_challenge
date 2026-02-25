@@ -1,13 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
 router = APIRouter(prefix="/health", tags=["health"])
 
 
 @router.get("")
-async def ping_health() -> dict[str, str]:
+async def ping_health(request: Request) -> dict[str, str]:
     """Check the server is up and running.
 
     Returns:
-         dict[str, str]: Health check response with status and version.
+        dict[str, str]: Health check response with status and version.
     """
-    return {"status": "OK", "version": "0.0.1"}
+    return {"status": "OK", "version": request.app.version}
