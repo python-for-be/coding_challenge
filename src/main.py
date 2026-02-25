@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from src.core.exception_handlers import setup_exception_handlers
 from src.routes import health, users
 
 app = FastAPI(
@@ -9,6 +10,8 @@ app = FastAPI(
     title="Coding Challenge",
     version="0.0.1",
 )
+
+setup_exception_handlers(app)
 
 app.include_router(health.router)
 app.include_router(users.router)
