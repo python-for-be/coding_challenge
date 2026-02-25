@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.routes import health
+from src.routes import health, users
 
 app = FastAPI(
     contact={"name": "admin", "email": "admin@coding-challenge.com"},
@@ -11,3 +11,4 @@ app = FastAPI(
 )
 
 app.include_router(health.router)
+app.include_router(users.router)
