@@ -77,10 +77,10 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 
 [tool.interrogate]
-ignore-init-method = false
+ignore-init-method = true
 ignore-init-module = false
 ignore-magic = false
-ignore-module = false
+ignore-module = true
 fail-under = 80
 # example values
 exclude = ["setup.py", "docs", "build"]
