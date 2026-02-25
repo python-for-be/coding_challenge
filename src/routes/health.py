@@ -4,7 +4,7 @@ router = APIRouter(prefix="/health", tags=["health"])
 
 
 @router.get("")
-async def ping_health():
+async def ping_health() -> dict[str, str]:
     """Check the server is up and running.
 
     Returns:

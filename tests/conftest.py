@@ -1,3 +1,5 @@
+from typing import AsyncGenerator
+
 import pytest
 from httpx import AsyncClient, ASGITransport
 
@@ -5,7 +7,7 @@ from src.main import app
 
 
 @pytest.fixture
-async def async_test_client():
+async def async_test_client() -> AsyncGenerator[AsyncClient, None]:
     """Provides an asynchronous test client for HTTP requests.
 
     Returns:

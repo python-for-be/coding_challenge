@@ -1,4 +1,6 @@
-async def test_health_endpoint_success(async_test_client):
+from httpx import AsyncClient
+
+async def test_health_endpoint_success(async_test_client: AsyncClient) -> None:
     """Verify the health endpoint returns a 200 status code.
 
     Returns: None
