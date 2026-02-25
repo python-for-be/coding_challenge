@@ -1,3 +1,4 @@
+from freezegun import freeze_time
 from httpx import AsyncClient
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -69,6 +70,7 @@ async def test_create_user_raises_date_of_birth_validation_error(async_test_clie
     }
 
 
+@freeze_time("2025-01-01")
 async def test_create_user_raises_date_of_birth_age_error(async_test_client: AsyncClient) -> None:
     """Verify a validation error is raised for ages that are too young.
 
