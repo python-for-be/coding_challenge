@@ -67,3 +67,33 @@ async def test_create_user_raises_date_of_birth_validation_error(async_test_clie
     assert response.json() == {
         "detail": [{"msg": "Invalid date format, expected YYYY-MM-DD", "type": "date_format_error"}]
     }
+
+
+async def test_create_user_raises_date_of_birth_age_error(async_test_client: AsyncClient) -> None:
+    """Verify a validation error is raised for ages that are too young.
+
+    Args:
+        async_test_client (AsyncClient): Test client
+
+    Returns: None
+
+    """
+    response = await async_test_client.post(
+        "/users",
+        json={
+            "firstname": "new",
+            "lastname": "user",
+            "date_of_birth": "2025-01-02",
+            "address": {
+                "number": "1",
+                "street_name": "new street",
+                "city": "new city",
+                "postcode": "abc123",
+                "country": "UK",
+            },
+        },
+    )
+    assert response.status_code == 422
+    assert response.json() == {
+        "detail": [{"msg": "User age must be at least 16 years old.", "type": "minimum_age_error"}]
+    }
