@@ -31,6 +31,24 @@ services:
       - '5432:5432'
     volumes:
       - db-volume:/var/lib/postgresql/data
+  test_db:
+    image: postgres:17.4
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${TEST_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${TEST_POSTGRES_PASSWORD}
+      - DB_NAME=${TEST_DB_NAME}
+      - DB_HOST=${TEST_DB_HOST}
+      - DB_PORT=${TEST_DB_PORT}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - '5433:5432'
 
 volumes:
   db-volume:
