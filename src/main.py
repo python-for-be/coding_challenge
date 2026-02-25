@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 
+from src.routes import health
+
 app = FastAPI()
 
-
-@app.get("/health")
-async def ping_health():
-    return {"status": "OK", "version": "0.0.1"}
+app.include_router(health.router)
