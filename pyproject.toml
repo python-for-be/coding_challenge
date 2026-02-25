@@ -83,7 +83,7 @@ ignore-magic = false
 ignore-module = true
 fail-under = 80
 # example values
-exclude = ["setup.py", "docs", "build"]
+exclude = ["setup.py", "docs", "build", "alembic"]
 # example regex
 ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
 ext = []
@@ -99,6 +99,7 @@ omit-covered-files = false
 
 [tool.mypy]
 strict = true
+exclude = ["alembic/"]
 
 
 [tool.poetry]
