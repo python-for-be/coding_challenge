@@ -100,6 +100,11 @@ omit-covered-files = false
 [tool.mypy]
 strict = true
 exclude = ["alembic/"]
+plugins = ["sqlalchemy.ext.mypy.plugin", "pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = "pydantic_settings.*"
+ignore_missing_imports = true
 
 
 [tool.poetry]
