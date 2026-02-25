@@ -38,3 +38,10 @@ async def test_read_user_records_success(async_test_client: AsyncClient) -> None
             },
         },
     ]
+
+
+async def test_list_users_empty(async_test_client: AsyncClient) -> None:
+    """Verify fetching users from an empty database returns an empty list."""
+    response = await async_test_client.get("/users")
+    assert response.status_code == 200
+    assert response.json() == []
