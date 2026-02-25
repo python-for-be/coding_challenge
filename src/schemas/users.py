@@ -53,6 +53,36 @@ class UserCreateSchema(BaseModel):
         return value
 
 
+class UserUpdateSchema(BaseModel):
+    """Schema for updating an existing user.
+
+    Attributes:
+        firstname (str): The first name of the user.
+        lastname (str): The last name of the user.
+        date_of_birth (date): The user's date of birth.
+        address (AddressCreateSchema): The user's address information.
+    """
+
+    firstname: str
+    lastname: str
+    date_of_birth: date
+    address: AddressCreateSchema
+
+    @field_validator("date_of_birth", mode="before")
+    def validate_date_of_birth(cls, value: str) -> str:
+        """Validates date format matches YYYY-MM-DD."""
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+        except ValueError:
+            raise DateFormatError("Invalid date format, expected YYYY-MM-DD")
+
+        user_age = calculate_age(date_of_birth=value)
+
+        if user_age < 16:
+            raise MinimumAgeError("User age must be at least 16 years old.")
+        return value
+
+
 class Address(BaseModel):
     """Schema for the address of a user.
 
