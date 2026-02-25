@@ -1,7 +1,7 @@
 from datetime import date
 from typing import Sequence
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -35,3 +35,12 @@ class UserRepository:
         await self.session.commit()
         await self.session.refresh(user)
         return user
+
+    async def delete_user(self, user_id: int) -> None:
+        """Delete a user by ID.
+
+        Args:
+            user_id (int): Unique identifier of the user to delete.
+        """
+        stmt = delete(User).where(User.id == user_id).returning(User.id)
+        await self.session.execute(stmt)
