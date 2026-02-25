@@ -20,3 +20,16 @@ async def test_delete_user_success(async_test_client: AsyncClient, db_session: A
     stmt = select(User).where(User.id == user_id)
     result = await db_session.execute(stmt)
     assert result.scalar_one_or_none() is None
+
+
+async def test_delete_user_no_record_found_error(async_test_client: AsyncClient) -> None:
+    """Verify a user record can be deleted.
+
+    Args:
+        async_test_client (AsyncClient): Test client
+
+    Returns: None
+    """
+    response = await async_test_client.delete("/users/15")
+    assert response.status_code == 404
+    assert response.json() == {"detail": [{"msg": "User not found.", "type": "user_not_found_error"}]}
