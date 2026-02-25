@@ -1,5 +1,7 @@
-from pydantic import BaseModel, ConfigDict
-from datetime import date
+from datetime import date, datetime
+from pydantic import BaseModel, ConfigDict, field_validator
+
+from src.core.exceptions import DateFormatError
 
 
 class AddressCreateSchema(BaseModel):
@@ -34,6 +36,15 @@ class UserCreateSchema(BaseModel):
     lastname: str
     date_of_birth: date
     address: AddressCreateSchema
+
+    @field_validator("date_of_birth", mode="before")
+    def validate_date_of_birth(cls, value: str) -> str:
+        """Validates date format matches YYYY-MM-DD."""
+        try:
+            datetime.strptime(value, "%Y-%m-%d")
+        except ValueError:
+            raise DateFormatError("Invalid date format, expected YYYY-MM-DD")
+        return value
 
 
 class Address(BaseModel):
