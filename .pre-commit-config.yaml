@@ -1,0 +1,28 @@
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.11.5
+  hooks:
+  # Run the linter.
+  - id: ruff
+  # Run the formatter.
+  - id: ruff-format
+- repo: https://github.com/econchick/interrogate
+  rev: 1.6.0
+  hooks:
+  - id: interrogate
+    exclude: ^(tests/|alembic)
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: 'v1.15.0'  # Use the sha / tag you want to point at
+  hooks:
+  -   id: mypy
+      args: [--strict, --ignore-missing-imports]
+      exclude: ^(tests/|alembic/)
+      additional_dependencies:
+        - fastapi
+        - sqlalchemy[mypy]
+        - mypy==1.15.0
+        - alembic
+        - python-dotenv
+        - pydantic==2.12.5
+        - pydantic-settings
