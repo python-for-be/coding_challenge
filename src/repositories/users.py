@@ -45,3 +45,33 @@ class UserRepository:
         deleted_id = result.scalar_one_or_none()
         if deleted_id is None:
             raise UserNotFoundError("User not found.")
+
+    async def update_user(
+        self, user_id: int, user_data: dict[str, date | str | int], address_data: dict[str, str | int]
+    ) -> User:
+        """Update a user and their address.
+
+        Args:
+            user_id (int): Unique identifier of the user to update.
+            user_data (dict[str, Any]): User data to update.
+            address_data (dict[str, Any]): Address data to update.
+        """
+        stmt = select(User).where(User.id == user_id).options(selectinload(User.address))
+        result = await self.session.execute(stmt)
+        user = result.scalar_one_or_none()
+
+        if user is None:
+            raise UserNotFoundError(f"User with id {user_id} not found")
+
+        for key, value in user_data.items():
+            setattr(user, key, value)
+
+        if user.address:
+            for key, value in address_data.items():
+                setattr(user.address, key, value)
+        else:
+            user.address = Address(**address_data)
+
+        await self.session.commit()
+        await self.session.refresh(user)
+        return user

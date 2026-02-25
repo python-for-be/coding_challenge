@@ -1,7 +1,7 @@
 from typing import List, Any
 
 from src.repositories.users import UserRepository
-from src.schemas.users import UsersResponse, UserCreateSchema
+from src.schemas.users import UserCreateSchema, UsersResponse, UserUpdateSchema
 
 
 class UserService:
@@ -33,3 +33,15 @@ class UserService:
             user_id (int): Unique identifier of the user to delete.
         """
         await self.repository.delete_user(user_id)
+
+    async def update_user(self, user_id: int, user_in: UserUpdateSchema) -> dict[str, Any]:
+        """Update an existing user.
+
+        Args:
+            user_id (int): Unique identifier of the user to update.
+            user_in (UserUpdateSchema): User object to update.
+        """
+        user_data = user_in.model_dump()
+        address_data = user_data.pop("address")
+        user = await self.repository.update_user(user_id, user_data, address_data)
+        return UsersResponse.model_validate(user).model_dump()
