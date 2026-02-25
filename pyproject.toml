@@ -1,0 +1,36 @@
+[project]
+name = "coding-challenge"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Michael Brown",email = "python_for_be@tutamail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "fastapi (>=0.133.0,<0.134.0)",
+    "uvicorn (>=0.41.0,<0.42.0)",
+    "sqlalchemy[postgresql-psycopg2binary] (>=2.0.47,<3.0.0)",
+    "alembic (>=1.18.4,<2.0.0)",
+    "asyncpg (>=0.31.0,<0.32.0)",
+    "pydantic (>=2.12.5,<3.0.0)",
+    "pydantic-settings (>=2.13.1,<3.0.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+black = "^26.1.0"
+httpx = "^0.28.1"
+ruff = "^0.15.2"
+interrogate = "^1.7.0"
+mypy = "^1.19.1"
+pytest-cov = "^7.0.0"
+pre-commit = "^4.5.1"
+polyfactory = "^3.3.0"
+freezegun = "^1.5.5"
+pytest-asyncio = "^1.3.0"
+
