@@ -25,3 +25,11 @@ class UserService:
         address_data = user_data.pop("address")
         user = await self.repository.create_user(user_data, address_data)
         return UsersResponse.model_validate(user).model_dump()
+
+    async def delete_user(self, user_id: int) -> None:
+        """Delete a user by ID.
+
+        Args:
+            user_id (int): Unique identifier of the user to delete.
+        """
+        await self.repository.delete_user(user_id)
