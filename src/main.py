@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
+from src.core.middleware import setup_middleware
 from src.core.app_logging import setup_logging
 from src.core.exception_handlers import setup_exception_handlers
 from src.routes import health, users
-
 
 setup_logging(log_level="INFO", log_file=None)
 
@@ -15,6 +15,7 @@ app = FastAPI(
     version="0.0.1",
 )
 
+setup_middleware(app=app)
 setup_exception_handlers(app)
 
 app.include_router(health.router)
