@@ -1,0 +1,17 @@
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_NAME=postgres
+DB_HOST=localhost
+DB_PORT=5432
+
+TEST_POSTGRES_USER=postgres
+TEST_POSTGRES_PASSWORD=postgres
+TEST_DB_NAME=postgres
+TEST_DB_HOST=localhost
+TEST_DB_PORT=5433
+
+# LOCAL DB
+SQLALCHEMY_URL=postgresql://postgres:postgres@localhost:5432/postgres
+
+# TEST DB
+#SQLALCHEMY_URL=postgresql://postgres:postgres@localhost:5433/postgres
